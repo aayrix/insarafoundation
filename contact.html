@@ -10,7 +10,11 @@
 <meta property="og:description" content="Get in touch with INSARA Foundation in Mianwali, Punjab, Pakistan to volunteer, donate, or ask a question.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="images/hero.jpg">
-<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" href="images/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="images/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -56,24 +60,35 @@
   <div class="container page-hero-inner">
     <p class="breadcrumb"><a href="index.html">Home</a> / Contact</p>
     <h1>Contact INSARA Foundation</h1>
-    <p>We'd love to hear from you &mdash; whether you want to volunteer, give, or simply learn more.</p>
+    <p>Reach out anytime &mdash; we read every message and respond personally.</p>
   </div>
 </section>
 
 <section class="section">
-  <div class="container" style="display:grid;grid-template-columns:2fr 3fr;gap:40px;">
-    <div class="reveal">
+  <div class="container contact-layout">
+    <div class="contact-sidebar reveal">
+      <div class="contact-intro">
+        <h2>Get in Touch</h2>
+        <p>Whether you want to volunteer, donate, partner with us, or ask a question, our team is here to help.</p>
+      </div>
+      <div class="contact-direct">
+        <div>
+          <strong style="display:block;margin-bottom:4px;">Email us directly</strong>
+          <a href="mailto:insarafoundation@gmail.com" style="color:var(--color-primary);font-weight:600;">insarafoundation@gmail.com</a>
+        </div>
+        <a href="mailto:insarafoundation@gmail.com" class="btn btn-secondary"><i class="fa-solid fa-envelope"></i> Send Email</a>
+      </div>
       <div class="contact-item">
         <div class="icon-box blue"><i class="fa-solid fa-location-dot"></i></div>
         <div><h4>Location</h4><p>Mianwali, Punjab, Pakistan</p></div>
       </div>
       <div class="contact-item">
         <div class="icon-box green"><i class="fa-solid fa-envelope"></i></div>
-        <div><h4>Email</h4><a href="mailto:aliyanniazi370@gmail.com">info@insarafoundation.org</a></div>
+        <div><h4>Email</h4><a href="mailto:insarafoundation@gmail.com">insarafoundation@gmail.com</a></div>
       </div>
       <div class="contact-item">
-        <div class="icon-box gold"><i class="fa-solid fa-phone"></i></div>
-        <div><h4>Phone</h4><a href="tel:+92XXXXXXXXXX">+92 XXX XXXXXXX</a></div>
+        <div class="icon-box gold"><i class="fa-solid fa-clock"></i></div>
+        <div><h4>Response Time</h4><p>We typically reply within 2&ndash;3 business days.</p></div>
       </div>
       <div class="map-frame">
         <iframe title="Map showing Mianwali, Punjab, Pakistan" loading="lazy"
@@ -81,7 +96,14 @@
       </div>
     </div>
 
-    <form id="contact-form" class="card card-pad reveal">
+    <form id="contact-form" class="card card-pad reveal" action="https://formsubmit.co/insarafoundation@gmail.com" method="POST" data-formsubmit>
+      <input type="hidden" name="_subject" value="New Contact Message — INSARA Foundation Website">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_next" value="">
+      <h3 class="font-display" style="font-size:1.35rem;margin-bottom:6px;">Send Us a Message</h3>
+      <p style="color:var(--color-text-muted);font-size:.9rem;margin-bottom:24px;">Fill out the form below and your message will be delivered directly to our inbox.</p>
       <div class="form-row">
         <div class="form-group">
           <label for="name">Full Name</label>
@@ -106,7 +128,8 @@
         <textarea required id="message" name="message" rows="6" placeholder="Tell us how you'd like to help..."></textarea>
       </div>
       <button type="submit" class="btn btn-primary">Send Message <i class="fa-solid fa-paper-plane"></i></button>
-      <p id="form-status" class="form-status"><i class="fa-solid fa-circle-check"></i> Thank you &mdash; your message has been noted. We'll get back to you soon.</p>
+      <p class="contact-response"><i class="fa-solid fa-shield-heart"></i> Your message is sent securely to our official inbox.</p>
+      <p id="form-status" class="form-status"><i class="fa-solid fa-circle-check"></i> Thank you &mdash; your message has been sent. We&rsquo;ll get back to you soon.</p>
     </form>
   </div>
 </section>
@@ -139,10 +162,15 @@
         <a href="donate.html">Donate</a>
         <a href="contact.html">Contact Us</a>
       </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:insarafoundation@gmail.com" class="footer-email"><i class="fa-solid fa-envelope"></i> insarafoundation@gmail.com</a>
+        <span class="footer-location">Mianwali, Punjab, Pakistan</span>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>Copyright &copy; 2026 INSARA Foundation. All Rights Reserved.</p>
-      <p>Mianwali, Punjab, Pakistan</p>
+      <p><a href="mailto:insarafoundation@gmail.com">insarafoundation@gmail.com</a></p>
     </div>
   </div>
 </footer>

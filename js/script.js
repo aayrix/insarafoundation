@@ -75,16 +75,31 @@ document.addEventListener('DOMContentLoaded', () => {
     revealTargets.forEach(el => el.classList.add('in'));
   }
 
-  /* ---------------- contact form (front-end demo only) ---------------- */
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const status = document.getElementById('form-status');
+  /* ---------------- contact forms (delivers to insarafoundation@gmail.com) ---------------- */
+  const forms = document.querySelectorAll('form[data-formsubmit]');
+  forms.forEach(form => {
+    const nextField = form.querySelector('input[name="_next"]');
+    if (nextField) {
+      const page = (location.pathname.split('/').pop() || 'index.html');
+      nextField.value = `${location.origin}${location.pathname.replace(/[^/]+$/, page)}?sent=true`;
+    }
+
+    if (new URLSearchParams(location.search).get('sent') === 'true') {
+      const status = form.querySelector('.form-status');
       if (status) status.classList.add('show');
-      form.reset();
+      history.replaceState(null, '', location.pathname);
+    }
+
+    form.addEventListener('submit', () => {
+      const btn = form.querySelector('button[type="submit"]');
+      if (btn && !btn.disabled) {
+        btn.disabled = true;
+        const label = btn.dataset.label || btn.innerHTML;
+        btn.dataset.label = label;
+        btn.innerHTML = 'Sending&hellip; <i class="fa-solid fa-spinner fa-spin"></i>';
+      }
     });
-  }
+  });
 
   /* ---------------- highlight current page in nav ---------------- */
   const currentPage = (location.pathname.split('/').pop() || 'index.html');

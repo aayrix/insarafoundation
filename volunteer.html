@@ -10,7 +10,11 @@
 <meta property="og:description" content="Become a founding volunteer with INSARA Foundation and help shape a newly established nonprofit serving Mianwali, Punjab, Pakistan from day one.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="images/hero.jpg">
-<link rel="icon" href="images/favicon.png" type="image/png">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" href="images/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="images/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -101,7 +105,12 @@
       <h2 class="font-display">Tell Us How You'd Like to Help</h2>
       <p>Fill in the short form below and our founding team will personally follow up.</p>
     </div>
-    <form id="contact-form" class="card card-pad reveal">
+    <form id="contact-form" class="card card-pad reveal" action="https://formsubmit.co/insarafoundation@gmail.com" method="POST" data-formsubmit>
+      <input type="hidden" name="_subject" value="New Volunteer Application — INSARA Foundation Website">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_next" value="">
       <div class="form-row">
         <div class="form-group">
           <label for="name">Full Name</label>
@@ -126,7 +135,7 @@
         <textarea required id="message" name="message" rows="5" placeholder="Your background, availability, and how you'd like to help..."></textarea>
       </div>
       <button type="submit" class="btn btn-primary btn-block">Submit Application <i class="fa-solid fa-paper-plane"></i></button>
-      <p id="form-status" class="form-status"><i class="fa-solid fa-circle-check"></i> Thank you &mdash; your application has been noted. We'll get back to you soon.</p>
+      <p id="form-status" class="form-status"><i class="fa-solid fa-circle-check"></i> Thank you &mdash; your application has been sent. We&rsquo;ll get back to you soon.</p>
     </form>
   </div>
 </section>
@@ -159,10 +168,15 @@
         <a href="donate.html">Donate</a>
         <a href="contact.html">Contact Us</a>
       </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:insarafoundation@gmail.com" class="footer-email"><i class="fa-solid fa-envelope"></i> insarafoundation@gmail.com</a>
+        <span class="footer-location">Mianwali, Punjab, Pakistan</span>
+      </div>
     </div>
     <div class="footer-bottom">
       <p>Copyright &copy; 2026 INSARA Foundation. All Rights Reserved.</p>
-      <p>Mianwali, Punjab, Pakistan</p>
+      <p><a href="mailto:insarafoundation@gmail.com">insarafoundation@gmail.com</a></p>
     </div>
   </div>
 </footer>
