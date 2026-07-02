@@ -1,0 +1,50 @@
+/* ==========================================================================
+   INSARA FOUNDATION — RESPONSIVE STYLES
+   Mobile-first overrides. Edit breakpoints here to adjust layout per device.
+   ========================================================================== */
+
+/* ---------- tablets & small laptops (<=1024px) ---------- */
+@media (max-width:1024px){
+  .grid-4{ grid-template-columns:repeat(2,1fr); }
+  .grid-3{ grid-template-columns:repeat(2,1fr); }
+  .footer-grid{ grid-template-columns:1fr 1fr; }
+  .footer-grid .footer-brand-col{ grid-column:1 / -1; }
+}
+
+/* ---------- tablets (<=900px) ---------- */
+@media (max-width:900px){
+  .main-nav{ display:none; }
+  .menu-toggle{ display:grid; place-items:center; }
+  .two-col{ grid-template-columns:1fr; gap:40px; }
+  .two-col.reverse-mobile > *:first-child{ order:2; }
+  .hero h1{ font-size:clamp(1.9rem,7vw,2.8rem); }
+  .section{ padding:72px 0; }
+  section .container[style*="grid-template-columns:2fr 3fr"]{ grid-template-columns:1fr !important; }
+}
+
+/* ---------- mobile (<=640px) ---------- */
+@media (max-width:640px){
+  :root{ --header-h:72px; }
+  .grid-4, .grid-3, .grid-2{ grid-template-columns:repeat(2,1fr); }
+  .form-row{ grid-template-columns:1fr; }
+  .footer-grid{ grid-template-columns:1fr; }
+  .footer-bottom{ flex-direction:column; gap:8px; text-align:center; }
+  .section-head h2{ font-size:1.7rem; }
+  .hero p{ font-size:1rem; }
+  .hero-actions .btn{ width:100%; justify-content:center; }
+  .floating-card{ position:static; margin-top:20px; max-width:100%; }
+  .btn{ padding:13px 24px; font-size:.9rem; }
+  .brand-name{ font-size:1rem; }
+  .card-pad{ padding:26px; }
+}
+
+/* ---------- very small phones (<=400px) ---------- */
+@media (max-width:400px){
+  .grid-4, .grid-3, .grid-2{ grid-template-columns:1fr; }
+  .container{ padding-inline:16px; }
+}
+
+/* ---------- print ---------- */
+@media print{
+  .site-header, .back-to-top, .mobile-nav{ display:none !important; }
+}
