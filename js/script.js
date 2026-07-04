@@ -83,22 +83,25 @@ document.addEventListener('DOMContentLoaded', () => {
     volunteer: 'Thank you for volunteering with INSARA Foundation! We have received your application and will connect with you soon.',
   };
 
-  const sendAutoReply = (form) => {
+  const isEmailJsReady = () => {
     const cfg = window.EMAILJS_CONFIG;
-    if (!cfg?.publicKey || !cfg?.serviceId || !cfg?.templateId || typeof emailjs === 'undefined') return;
+    return Boolean(cfg?.publicKey && cfg?.serviceId && cfg?.templateId && typeof emailjs !== 'undefined');
+  };
 
+  const sendAutoReply = async (form) => {
+    const cfg = window.EMAILJS_CONFIG;
     const subject = form.querySelector('input[name="_subject"]')?.value || '';
     const type = subject.includes('Volunteer') ? 'volunteer' : 'contact';
     const email = form.querySelector('[name="email"]')?.value?.trim();
     const name = form.querySelector('[name="name"]')?.value?.trim() || '';
     if (!email) return;
 
-    emailjs.send(cfg.serviceId, cfg.templateId, {
+    await emailjs.send(cfg.serviceId, cfg.templateId, {
       email,
       name,
       reply_message: AUTO_REPLY_MESSAGES[type],
       reply_to: 'insarafoundation@gmail.com',
-    }, { publicKey: cfg.publicKey }).catch(() => {});
+    }, { publicKey: cfg.publicKey });
   };
 
   const forms = document.querySelectorAll('form[data-formsubmit]');
@@ -115,16 +118,34 @@ document.addEventListener('DOMContentLoaded', () => {
       history.replaceState(null, '', location.pathname);
     }
 
-    form.addEventListener('submit', () => {
-      sendAutoReply(form);
-
+    form.addEventListener('submit', async (e) => {
       const btn = form.querySelector('button[type="submit"]');
-      if (btn && !btn.disabled) {
+      if (btn?.disabled) {
+        e.preventDefault();
+        return;
+      }
+
+      e.preventDefault();
+
+      if (btn) {
         btn.disabled = true;
         const label = btn.dataset.label || btn.innerHTML;
         btn.dataset.label = label;
         btn.innerHTML = 'Sending&hellip; <i class="fa-solid fa-spinner fa-spin"></i>';
       }
+
+      if (isEmailJsReady()) {
+        try {
+          await Promise.race([
+            sendAutoReply(form),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Auto-reply timeout')), 8000)),
+          ]);
+        } catch (err) {
+          console.error('Auto-reply failed:', err);
+        }
+      }
+
+      form.submit();
     });
   });
 
