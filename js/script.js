@@ -10,18 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('menu-toggle');
   const mobileNav = document.getElementById('mobile-nav');
   if (menuToggle && mobileNav) {
+    const closeMenu = () => {
+      mobileNav.classList.remove('open');
+      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
+      menuToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    };
+
     menuToggle.addEventListener('click', () => {
       const isOpen = mobileNav.classList.toggle('open');
       menuToggle.setAttribute('aria-expanded', String(isOpen));
       menuToggle.innerHTML = isOpen ? '<i class="fa-solid fa-xmark"></i>' : '<i class="fa-solid fa-bars"></i>';
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      document.body.classList.toggle('menu-open', isOpen);
     });
-    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mobileNav.classList.remove('open');
-      menuToggle.innerHTML = '<i class="fa-solid fa-bars"></i>';
-      menuToggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }));
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
   }
 
   /* ---------------- dark mode (session only, no storage) ---------------- */
