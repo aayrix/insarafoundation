@@ -78,8 +78,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------------- contact forms (delivers to insarafoundation@gmail.com) ---------------- */
+  const AUTO_REPLY_MESSAGES = {
+    contact: 'Thank you for contacting INSARA Foundation! We have received your message and will connect with you soon.',
+    volunteer: 'Thank you for volunteering with INSARA Foundation! We have received your application and will connect with you soon.',
+  };
+
   const forms = document.querySelectorAll('form[data-formsubmit]');
   forms.forEach(form => {
+    if (!form.querySelector('input[name="_autoresponse"]')) {
+      const subject = form.querySelector('input[name="_subject"]')?.value || '';
+      const type = subject.includes('Volunteer') ? 'volunteer' : 'contact';
+      const autoresponse = document.createElement('input');
+      autoresponse.type = 'hidden';
+      autoresponse.name = '_autoresponse';
+      autoresponse.value = AUTO_REPLY_MESSAGES[type];
+      form.appendChild(autoresponse);
+    }
+
     const nextField = form.querySelector('input[name="_next"]');
     if (nextField) {
       const page = (location.pathname.split('/').pop() || 'index.html');
