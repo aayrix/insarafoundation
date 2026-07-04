@@ -83,18 +83,26 @@ document.addEventListener('DOMContentLoaded', () => {
     volunteer: 'Thank you for volunteering with INSARA Foundation! We have received your application and will connect with you soon.',
   };
 
+  const sendAutoReply = (form) => {
+    const cfg = window.EMAILJS_CONFIG;
+    if (!cfg?.publicKey || !cfg?.serviceId || !cfg?.templateId || typeof emailjs === 'undefined') return;
+
+    const subject = form.querySelector('input[name="_subject"]')?.value || '';
+    const type = subject.includes('Volunteer') ? 'volunteer' : 'contact';
+    const email = form.querySelector('[name="email"]')?.value?.trim();
+    const name = form.querySelector('[name="name"]')?.value?.trim() || '';
+    if (!email) return;
+
+    emailjs.send(cfg.serviceId, cfg.templateId, {
+      email,
+      name,
+      reply_message: AUTO_REPLY_MESSAGES[type],
+      reply_to: 'insarafoundation@gmail.com',
+    }, { publicKey: cfg.publicKey }).catch(() => {});
+  };
+
   const forms = document.querySelectorAll('form[data-formsubmit]');
   forms.forEach(form => {
-    if (!form.querySelector('input[name="_autoresponse"]')) {
-      const subject = form.querySelector('input[name="_subject"]')?.value || '';
-      const type = subject.includes('Volunteer') ? 'volunteer' : 'contact';
-      const autoresponse = document.createElement('input');
-      autoresponse.type = 'hidden';
-      autoresponse.name = '_autoresponse';
-      autoresponse.value = AUTO_REPLY_MESSAGES[type];
-      form.appendChild(autoresponse);
-    }
-
     const nextField = form.querySelector('input[name="_next"]');
     if (nextField) {
       const page = (location.pathname.split('/').pop() || 'index.html');
@@ -108,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     form.addEventListener('submit', () => {
+      sendAutoReply(form);
+
       const btn = form.querySelector('button[type="submit"]');
       if (btn && !btn.disabled) {
         btn.disabled = true;
