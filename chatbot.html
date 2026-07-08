@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Assistant | INSARA Foundation</title>
+<meta name="description" content="Chat with INSARA Foundation's AI assistant for donations, volunteering, programs, and general guidance.">
+<link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="images/favicon.ico" sizes="any">
+<link rel="icon" href="images/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="images/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<meta name="theme-color" content="#0F5132">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/chatbot.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<header class="site-header" id="site-header">
+  <div class="container nav-wrap">
+    <a href="index.html" class="brand">
+      <img src="images/logo-sm.png" alt="INSARA Foundation logo" width="44" height="44">
+      <span>
+        <span class="brand-name">INSARA</span>
+        <span class="brand-sub">FOUNDATION</span>
+      </span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Future Projects</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="donate.html">Donate</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a href="chatbot.html" class="active">AI Assistant</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn" id="dark-toggle" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
+      <a href="donate.html" class="btn btn-secondary btn-sm"><i class="fa-solid fa-heart"></i> Donate</a>
+      <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="projects.html">Future Projects</a>
+  <a href="volunteer.html">Volunteer</a>
+  <a href="donate.html">Donate</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+  <a href="chatbot.html" class="active">AI Assistant</a>
+  <a href="donate.html" class="btn btn-secondary btn-block" style="margin-top:18px;"><i class="fa-solid fa-heart"></i> Donate</a>
+</div>
+
+<section class="page-hero" style="background-image:url('images/children-group.jpg');">
+  <div class="container page-hero-inner reveal">
+    <p class="breadcrumb"><a href="index.html">Home</a> / AI Assistant</p>
+    <h1>Ask the INSARA Assistant</h1>
+    <p>Get quick support about donations, volunteering, programs, events, and how to connect with our team.</p>
+  </div>
+</section>
+
+<main class="section section-alt">
+  <div class="container chatbot-layout reveal">
+    <section class="chatbot-info card">
+      <div class="chatbot-info-body">
+        <span class="eyebrow">Smart Support</span>
+        <h2 class="font-display section-title">Friendly guidance, anytime</h2>
+        <p class="prose">Ask questions about INSARA Foundation, donations, volunteering, programs, events, and contact details.</p>
+        <div class="chatbot-feature-list">
+          <div class="chatbot-feature-item">
+            <i class="fa-solid fa-heart-circle-check" aria-hidden="true"></i>
+            <span>Donation guidance and support options</span>
+          </div>
+          <div class="chatbot-feature-item">
+            <i class="fa-solid fa-hands-helping" aria-hidden="true"></i>
+            <span>Volunteer opportunities and onboarding help</span>
+          </div>
+          <div class="chatbot-feature-item">
+            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            <span>Programs, events, and general foundation information</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dedicated AI chat panel -->
+    <section id="chat-widget" class="chat-widget dedicated-chat" aria-hidden="false">
+      <div class="chat-widget-header">
+        <div>
+          <h3>INSARA Assistant</h3>
+          <p>Ask anything about our mission and services</p>
+        </div>
+        <button id="chat-clear" class="chat-icon-btn chat-clear-btn" aria-label="Clear chat messages">
+          <i class="fa-solid fa-broom" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <!-- Suggested quick actions -->
+      <div class="chat-quick-actions" id="chat-quick-actions">
+        <button type="button" class="chat-quick-action" data-message="How can I donate to Insara Foundation?">Donate</button>
+        <button type="button" class="chat-quick-action" data-message="How can I volunteer with Insara Foundation?">Volunteer</button>
+        <button type="button" class="chat-quick-action" data-message="How can I contact Insara Foundation?">Contact Us</button>
+        <button type="button" class="chat-quick-action" data-message="Tell me about your programs and events.">Our Programs</button>
+      </div>
+
+      <!-- Chat conversation stream -->
+      <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+
+      <!-- Typing indicator with spinner -->
+      <div id="chat-typing" class="chat-typing hidden" aria-hidden="true">
+        <span class="chat-spinner" aria-hidden="true"></span>
+        <span>Assistant is typing...</span>
+      </div>
+
+      <!-- Message input form -->
+      <form id="chat-form" class="chat-input-wrap">
+        <label for="chat-input" class="sr-only">Type your message</label>
+        <input id="chat-input" type="text" placeholder="Type your message..." autocomplete="off" maxlength="500" required>
+        <button id="chat-send" type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-paper-plane"></i>
+          <span>Send</span>
+        </button>
+      </form>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand-col">
+        <a href="index.html" class="footer-brand">
+          <img src="images/logo-sm.png" alt="INSARA Foundation logo">
+          <span class="font-display" style="font-weight:600;font-size:1.1rem;">INSARA FOUNDATION</span>
+        </a>
+        <p class="footer-desc">Inspired by Humanity. Driven by Compassion. A newly established nonprofit serving Mianwali, Punjab, Pakistan.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/insara_foundation" target="_blank" rel="noopener noreferrer" aria-label="Instagram @insara_foundation"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+        <span class="social-handle">Follow us @insara_foundation</span>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="about.html">About</a>
+        <a href="projects.html">Future Projects</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="about.html#mianwali">Mianwali</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get Involved</h4>
+        <a href="volunteer.html">Volunteer</a>
+        <a href="donate.html">Donate</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:insarafoundation@gmail.com" class="footer-email"><i class="fa-solid fa-envelope"></i> insarafoundation@gmail.com</a>
+        <span class="footer-location">Mianwali, Punjab, Pakistan</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Copyright &copy; 2026 INSARA Foundation. All Rights Reserved.</p>
+      <p><a href="mailto:insarafoundation@gmail.com">insarafoundation@gmail.com</a></p>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+<script src="js/script.js"></script>
+<script src="js/chatbot.js"></script>
+</body>
+</html>

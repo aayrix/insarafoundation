@@ -5,6 +5,9 @@
 
 /* ---------- tablets & small laptops (<=1024px) ---------- */
 @media (max-width:1024px){
+  .main-nav{ gap:18px; }
+  .main-nav a{ font-size:.8rem; }
+  .header-actions .btn-secondary{ display:none; }
   .grid-4{ grid-template-columns:repeat(2,1fr); }
   .grid-3, .grid-focus{ grid-template-columns:repeat(2,1fr); }
   .footer-grid{ grid-template-columns:1fr 1fr; gap:32px; }
