@@ -76,78 +76,75 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     revealTargets.forEach(el => el.classList.add('in'));
   }
+/* ---------------- EmailJS forms ---------------- */
 
-  /* ---------------- contact forms (delivers to insarafoundation@gmail.com) ---------------- */
-  const AUTO_REPLY_MESSAGES = {
-    contact: 'Thank you for contacting INSARA Foundation! We have received your message and will connect with you soon.',
-    volunteer: 'Thank you for volunteering with INSARA Foundation! We have received your application and will connect with you soon.',
-  };
+const cfg = window.EMAILJS_CONFIG;
 
-  const isEmailJsReady = () => {
-    const cfg = window.EMAILJS_CONFIG;
-    return Boolean(cfg?.publicKey && cfg?.serviceId && cfg?.templateId && typeof emailjs !== 'undefined');
-  };
+if (
+  typeof emailjs !== 'undefined' &&
+  cfg?.publicKey &&
+  cfg?.serviceId
+) {
+  emailjs.init({
+    publicKey: cfg.publicKey
+  });
 
-  const sendAutoReply = async (form) => {
-    const cfg = window.EMAILJS_CONFIG;
-    const subject = form.querySelector('input[name="_subject"]')?.value || '';
-    const type = subject.includes('Volunteer') ? 'volunteer' : 'contact';
-    const email = form.querySelector('[name="email"]')?.value?.trim();
-    const name = form.querySelector('[name="name"]')?.value?.trim() || '';
-    if (!email) return;
+  const forms = document.querySelectorAll('#contact-form');
 
-    await emailjs.send(cfg.serviceId, cfg.templateId, {
-      email,
-      name,
-      reply_message: AUTO_REPLY_MESSAGES[type],
-      reply_to: 'insarafoundation@gmail.com',
-    }, { publicKey: cfg.publicKey });
-  };
-
-  const forms = document.querySelectorAll('form[data-formsubmit]');
   forms.forEach(form => {
-    const nextField = form.querySelector('input[name="_next"]');
-    if (nextField) {
-      const page = (location.pathname.split('/').pop() || 'index.html');
-      nextField.value = `${location.origin}${location.pathname.replace(/[^/]+$/, page)}?sent=true`;
-    }
-
-    if (new URLSearchParams(location.search).get('sent') === 'true') {
-      const status = form.querySelector('.form-status');
-      if (status) status.classList.add('show');
-      history.replaceState(null, '', location.pathname);
-    }
-
-    form.addEventListener('submit', async (e) => {
-      const btn = form.querySelector('button[type="submit"]');
-      if (btn?.disabled) {
-        e.preventDefault();
-        return;
-      }
-
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
+
+      const btn =
+        form.querySelector('button[type="submit"]');
+
+      const originalText = btn?.innerHTML;
 
       if (btn) {
         btn.disabled = true;
-        const label = btn.dataset.label || btn.innerHTML;
-        btn.dataset.label = label;
-        btn.innerHTML = 'Sending&hellip; <i class="fa-solid fa-spinner fa-spin"></i>';
+        btn.innerHTML =
+          'Sending... <i class="fa-solid fa-spinner fa-spin"></i>';
       }
 
-      if (isEmailJsReady()) {
-        try {
-          await Promise.race([
-            sendAutoReply(form),
-            new Promise((_, reject) => setTimeout(() => reject(new Error('Auto-reply timeout')), 8000)),
-          ]);
-        } catch (err) {
-          console.error('Auto-reply failed:', err);
+      try {
+        // Email to INSARA Foundation
+        await emailjs.sendForm(
+          cfg.serviceId,
+          cfg.adminTemplateId,
+          this
+        );
+
+        // Auto reply to visitor
+        await emailjs.sendForm(
+          cfg.serviceId,
+          cfg.replyTemplateId,
+          this
+        );
+
+        const status =
+          document.getElementById('form-status');
+
+        if (status) {
+          status.classList.add('show');
         }
+
+        this.reset();
+
+      } catch (error) {
+        console.error(error);
+
+        alert(
+          'Something went wrong. Please try again.'
+        );
       }
 
-      form.submit();
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
     });
   });
+}
 
   /* ---------------- highlight current page in nav ---------------- */
   const currentPage = (location.pathname.split('/').pop() || 'index.html');
