@@ -3,153 +3,936 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Donate | INSARA Foundation</title>
-<meta name="description" content="Support INSARA Foundation, a newly established nonprofit in Mianwali, Punjab, Pakistan, as it takes its first steps toward serving underprivileged communities.">
-<meta name="keywords" content="INSARA Foundation, Mianwali, Punjab, Pakistan, NGO, nonprofit, charity, humanitarian, volunteer, donate">
+
+<meta name="description" content="Support INSARA Foundation and help us serve communities in Mianwali, Punjab, Pakistan.">
+
+<meta name="keywords" content="INSARA Foundation, Mianwali, Punjab, Pakistan, NGO, nonprofit, charity, humanitarian, donate">
+
 <meta property="og:title" content="Donate | INSARA Foundation">
-<meta property="og:description" content="Support INSARA Foundation, a newly established nonprofit in Mianwali, Punjab, Pakistan, as it takes its first steps toward serving underprivileged communities.">
+<meta property="og:description" content="Support INSARA Foundation and help us serve communities in Mianwali, Punjab, Pakistan.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="images/hero.jpg">
+
 <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="images/favicon.ico" sizes="any">
 <link rel="icon" href="images/favicon-32x32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="images/favicon-16x16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+
+/* =========================================================
+   DONATION PORTAL
+   ========================================================= */
+
+.donation-portal {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Donation statistics */
+
+.donation-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 45px 0;
+}
+
+.donation-stat {
+  text-align: center;
+  padding: 28px 20px;
+  border-radius: 16px;
+  background: var(--color-bg, #ffffff);
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+}
+
+.donation-stat i {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  color: var(--color-secondary);
+}
+
+.donation-stat-number {
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 2.3rem;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.donation-stat-label {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* Donation account */
+
+.donation-account {
+  max-width: 760px;
+  margin: 0 auto 50px;
+}
+
+.donation-account-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  padding: 35px;
+  color: white;
+  background:
+    linear-gradient(135deg, #087f45, #00a859);
+  box-shadow: 0 18px 45px rgba(0, 120, 70, 0.22);
+}
+
+.donation-account-card::after {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  right: -80px;
+  top: -90px;
+}
+
+.donation-provider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 35px;
+  position: relative;
+  z-index: 2;
+}
+
+.provider-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.provider-logo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: white;
+  color: #00894b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.provider-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.provider-type {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.account-badge {
+  padding: 8px 14px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 30px;
+  font-size: 0.8rem;
+}
+
+/* Account details */
+
+.account-details {
+  position: relative;
+  z-index: 2;
+}
+
+.account-label {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.account-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.account-number {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 25px;
+}
+
+.account-note {
+  font-size: 0.85rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+/* How to donate */
+
+.how-to-donate {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.donation-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.donation-step {
+  text-align: center;
+  padding: 25px 20px;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-secondary);
+  color: white;
+  font-weight: 700;
+}
+
+/* Transparency note */
+
+.transparency-box {
+  max-width: 850px;
+  margin: 40px auto 0;
+  padding: 20px 24px;
+  border-radius: 12px;
+  background: rgba(0, 150, 80, 0.07);
+  border-left: 4px solid var(--color-secondary);
+}
+
+.transparency-box i {
+  color: var(--color-secondary);
+  margin-right: 8px;
+}
+
+/* Donation confirmation */
+
+.confirmation-box {
+  max-width: 700px;
+  margin: 40px auto 0;
+  text-align: center;
+  padding: 30px;
+  border-radius: 16px;
+  background: var(--color-bg, #fff);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.confirmation-box h3 {
+  margin-bottom: 10px;
+}
+
+.confirmation-box p {
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.confirmation-box .btn {
+  margin-top: 15px;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+  .donation-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .donation-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .donation-account-card {
+    padding: 25px;
+  }
+
+  .donation-provider {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account-number {
+    font-size: 1.5rem;
+  }
+
+}
+
+</style>
+
 </head>
+
 <body>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
 <header class="site-header" id="site-header">
+
   <div class="container nav-wrap">
+
     <a href="index.html" class="brand">
-      <img src="images/logo-sm.png" alt="INSARA Foundation logo" width="44" height="44">
+
+      <img
+        src="images/logo-sm.png"
+        alt="INSARA Foundation logo"
+        width="44"
+        height="44"
+      >
+
       <span>
         <span class="brand-name">INSARA</span>
         <span class="brand-sub">FOUNDATION</span>
       </span>
+
     </a>
+
     <nav class="main-nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Future Projects</a>
-        <a href="volunteer.html">Volunteer</a>
-        <a href="donate.html" class="active">Donate</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="contact.html">Contact</a>
+
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Future Projects</a>
+      <a href="volunteer.html">Volunteer</a>
+      <a href="donate.html" class="active">Donate</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
       <a href="chatbot.html">AI Assistant</a>
+
     </nav>
+
     <div class="header-actions">
-      <button class="icon-btn" id="dark-toggle" aria-label="Toggle dark mode"><i class="fa-solid fa-moon"></i></button>
-      <a href="donate.html" class="btn btn-secondary btn-sm"><i class="fa-solid fa-heart"></i> Donate</a>
-      <button class="icon-btn menu-toggle" id="menu-toggle" aria-label="Open menu" aria-expanded="false"><i class="fa-solid fa-bars"></i></button>
+
+      <button
+        class="icon-btn"
+        id="dark-toggle"
+        aria-label="Toggle dark mode"
+      >
+        <i class="fa-solid fa-moon"></i>
+      </button>
+
+      <a href="donate.html" class="btn btn-secondary btn-sm">
+        <i class="fa-solid fa-heart"></i>
+        Donate
+      </a>
+
+      <button
+        class="icon-btn menu-toggle"
+        id="menu-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
     </div>
+
   </div>
+
 </header>
+
+
+<!-- =========================================================
+     MOBILE NAV
+     ========================================================= -->
+
 <div class="mobile-nav" id="mobile-nav">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="projects.html">Future Projects</a>
-    <a href="volunteer.html">Volunteer</a>
-    <a href="donate.html">Donate</a>
-    <a href="gallery.html">Gallery</a>
-    <a href="contact.html">Contact</a>
-      <a href="chatbot.html">AI Assistant</a>
-  <a href="donate.html" class="btn btn-secondary btn-block" style="margin-top:18px;"><i class="fa-solid fa-heart"></i> Donate</a>
+
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="projects.html">Future Projects</a>
+  <a href="volunteer.html">Volunteer</a>
+  <a href="donate.html">Donate</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="contact.html">Contact</a>
+  <a href="chatbot.html">AI Assistant</a>
+
+  <a
+    href="donate.html"
+    class="btn btn-secondary btn-block"
+    style="margin-top:18px;"
+  >
+    <i class="fa-solid fa-heart"></i>
+    Donate
+  </a>
+
 </div>
 
-<section class="page-hero" style="background-image:url('images/hero.jpg');">
+
+<!-- =========================================================
+     PAGE HERO
+     ========================================================= -->
+
+<section
+  class="page-hero"
+  style="background-image:url('images/hero.jpg');"
+>
+
   <div class="container page-hero-inner">
-    <p class="breadcrumb"><a href="index.html">Home</a> / Donate</p>
+
+    <p class="breadcrumb">
+      <a href="index.html">Home</a> / Donate
+    </p>
+
     <h1>Support Our Journey</h1>
-    <p>Every journey begins with one act of kindness.</p>
+
+    <p>
+      Every journey begins with one act of kindness.
+    </p>
+
   </div>
+
 </section>
+
+
+<!-- =========================================================
+     DONATION INTRO
+     ========================================================= -->
 
 <section class="section">
-  <div class="container two-col">
-    <div class="img-frame img-round reveal" style="aspect-ratio:4/3;">
-      <img loading="lazy" src="images/children-portrait.jpg" alt="Three children in Mianwali who represent the communities your support can help">
+
+  <div class="container donation-portal">
+
+    <div
+      class="section-head reveal"
+      style="text-align:center;max-width:750px;margin:0 auto;"
+    >
+
+      <span class="eyebrow">
+        Official Donation Portal
+      </span>
+
+      <h2 class="font-display">
+        Your Support Can Make a Difference
+      </h2>
+
+      <p>
+        INSARA Foundation is taking its first steps toward serving
+        communities in Mianwali, Punjab, Pakistan. Every contribution,
+        no matter how small, helps us move closer to our mission.
+      </p>
+
     </div>
-    <div class="reveal">
-      <span class="eyebrow">Support Our Journey</span>
-      <h2 class="font-display" style="font-size:2rem;margin-bottom:20px;">Every journey begins with one act of kindness.</h2>
-      <p style="color:var(--color-text-muted);margin-bottom:22px;">Your support helps us take our first steps toward creating lasting impact. As a newly established foundation, we're setting up our giving channels with the same transparency we promise for everything else &mdash; so we won't display donation totals or figures we haven't earned yet.</p>
-      <div class="note-box">
-        <i class="fa-solid fa-circle-info" style="color:var(--color-secondary);margin-right:8px;"></i>
-        Our formal donation portal is being set up. In the meantime, email us at <a href="mailto:insarafoundation@gmail.com" style="color:var(--color-secondary);font-weight:600;">insarafoundation@gmail.com</a> or use our contact form and our team will personally guide you.
+
+
+    <!-- =====================================================
+         LIVE DONATION STATISTICS
+         CHANGE THESE VALUES MANUALLY
+         ===================================================== -->
+
+    <div class="donation-stats">
+
+      <!-- CHANGE AMOUNT HERE -->
+      <div class="donation-stat reveal">
+
+        <i class="fa-solid fa-hand-holding-dollar"></i>
+
+        <span
+          class="donation-stat-number"
+          data-target="150"
+          data-prefix="Rs. "
+        >
+          Rs. 0
+        </span>
+
+        <span class="donation-stat-label">
+          Total Donations Collected
+        </span>
+
       </div>
-      <a href="contact.html" class="btn btn-secondary">Get in Touch to Give <i class="fa-solid fa-heart"></i></a>
+
+
+      <!-- CHANGE DONOR COUNT HERE -->
+
+      <div class="donation-stat reveal">
+
+        <i class="fa-solid fa-users"></i>
+
+        <span
+          class="donation-stat-number"
+          data-target="1"
+        >
+          1
+        </span>
+
+        <span class="donation-stat-label">
+          Donors
+        </span>
+
+      </div>
+
+
+      <!-- CHANGE DAYS HERE -->
+
+      <div class="donation-stat reveal">
+
+        <i class="fa-solid fa-calendar-days"></i>
+
+        <span
+          class="donation-stat-number"
+          data-target="1"
+        >
+          1
+        </span>
+
+        <span class="donation-stat-label">
+          Days Since Launch
+        </span>
+
+      </div>
+
     </div>
+
+
+    <!-- =====================================================
+         JAZZCASH DONATION ACCOUNT
+         ===================================================== -->
+
+    <div class="donation-account reveal">
+
+      <div class="donation-account-card">
+
+        <div class="donation-provider">
+
+          <div class="provider-logo">
+
+            <div class="provider-logo-icon">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+            </div>
+
+            <div>
+
+              <div class="provider-name">
+                JazzCash
+              </div>
+
+              <div class="provider-type">
+                Mobile Account
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="account-badge">
+            Official Donation Account
+          </div>
+
+        </div>
+
+
+        <div class="account-details">
+
+          <span class="account-label">
+            Account Holder
+          </span>
+
+          <div class="account-name">
+            Aliyan Abdullah Khan
+          </div>
+
+
+          <span class="account-label">
+            JazzCash Number
+          </span>
+
+          <div class="account-number">
+            0308 9590739
+          </div>
+
+
+          <p class="account-note">
+
+            This JazzCash account is currently being used by
+            Aliyan Abdullah Khan to receive donations on behalf
+            of INSARA Foundation. Please verify the account holder
+            name before completing your donation.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         HOW TO DONATE
+         ===================================================== -->
+
+    <div class="how-to-donate">
+
+      <div
+        class="section-head reveal"
+        style="text-align:center;"
+      >
+
+        <span class="eyebrow">
+          How to Donate
+        </span>
+
+        <h2 class="font-display">
+          Make Your Contribution in 3 Simple Steps
+        </h2>
+
+      </div>
+
+
+      <div class="donation-steps">
+
+        <div class="donation-step reveal">
+
+          <div class="step-number">
+            1
+          </div>
+
+          <h3>
+            Open JazzCash
+          </h3>
+
+          <p>
+            Open your JazzCash mobile application or visit
+            a nearby JazzCash retailer.
+          </p>
+
+        </div>
+
+
+        <div class="donation-step reveal">
+
+          <div class="step-number">
+            2
+          </div>
+
+          <h3>
+            Send Your Donation
+          </h3>
+
+          <p>
+            Send your chosen amount to
+            <strong>0308 9590739</strong>
+            under the name
+            <strong>Aliyan Abdullah Khan</strong>.
+          </p>
+
+        </div>
+
+
+        <div class="donation-step reveal">
+
+          <div class="step-number">
+            3
+          </div>
+
+          <h3>
+            Keep Your Receipt
+          </h3>
+
+          <p>
+            Keep your transaction receipt or screenshot
+            for your records.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TRANSPARENCY
+         ===================================================== -->
+
+    <div class="transparency-box reveal">
+
+      <i class="fa-solid fa-shield-heart"></i>
+
+      <strong>
+        Transparency Matters
+      </strong>
+
+      <p style="margin:8px 0 0;">
+
+     The figures above represent our current progress. We will continue updating this page as donations are received and our work grows. Thank you for being part of the INSARA Foundation journey.
+
+      </p>
+
+    </div>
+
+
+    <!-- =====================================================
+         DONATION CONFIRMATION
+         ===================================================== -->
+
+    <div class="confirmation-box reveal">
+
+      <h3 class="font-display">
+        Have You Made a Donation?
+      </h3>
+
+      <p>
+
+        If you have donated and would like to inform our team,
+        please contact us with your name and transaction details.
+        This helps us maintain accurate records and acknowledge
+        your support.
+
+      </p>
+
+      <a
+        href="contact.html"
+        class="btn btn-secondary"
+      >
+
+        <i class="fa-solid fa-envelope"></i>
+
+        Contact INSARA Foundation
+
+      </a>
+
+    </div>
+
   </div>
+
 </section>
 
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Why Give Now</span>
-      <h2 class="font-display">What Early Support Makes Possible</h2>
-    </div>
-    <div class="grid grid-3">
-      <div class="card card-pad reveal">
-        <div class="icon-box blue"><i class="fa-solid fa-seedling"></i></div>
-        <h3 style="margin-bottom:8px;">Getting Started Right</h3>
-        <p style="font-size:.9rem;color:var(--color-text-muted);">Early support helps us set up properly &mdash; systems, transparency, and a solid foundation to build on.</p>
-      </div>
-      <div class="card card-pad reveal">
-        <div class="icon-box green"><i class="fa-solid fa-people-group"></i></div>
-        <h3 style="margin-bottom:8px;">First Initiatives</h3>
-        <p style="font-size:.9rem;color:var(--color-text-muted);">Contributions will directly support our first planned programs, like the School Supply Program.</p>
-      </div>
-      <div class="card card-pad reveal">
-        <div class="icon-box gold"><i class="fa-solid fa-scale-balanced"></i></div>
-        <h3 style="margin-bottom:8px;">Honest Accounting</h3>
-        <p style="font-size:.9rem;color:var(--color-text-muted);">We'll share real, verifiable updates as our journey unfolds &mdash; not inflated numbers.</p>
-      </div>
-    </div>
-  </div>
-</section>
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
 <footer class="site-footer">
+
   <div class="container">
+
     <div class="footer-grid">
+
       <div class="footer-brand-col">
+
         <a href="index.html" class="footer-brand">
-          <img src="images/logo-sm.png" alt="INSARA Foundation logo">
-          <span class="font-display" style="font-weight:600;font-size:1.1rem;">INSARA FOUNDATION</span>
+
+          <img
+            src="images/logo-sm.png"
+            alt="INSARA Foundation logo"
+          >
+
+          <span
+            class="font-display"
+            style="font-weight:600;font-size:1.1rem;"
+          >
+            INSARA FOUNDATION
+          </span>
+
         </a>
-        <p class="footer-desc">Inspired by Humanity. Driven by Compassion. A newly established nonprofit serving Mianwali, Punjab, Pakistan.</p>
+
+        <p class="footer-desc">
+
+          Inspired by Humanity. Driven by Compassion.
+          A newly established nonprofit serving Mianwali,
+          Punjab, Pakistan.
+
+        </p>
+
         <div class="social-row">
-          <a href="https://www.instagram.com/insara_foundation" target="_blank" rel="noopener noreferrer" aria-label="Instagram @insara_foundation"<i class="fa-brands fa-instagram"></i></a>
+
+          <a
+            href="https://www.instagram.com/insara_foundation"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram @insara_foundation"
+          >
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
         </div>
-        <span class="social-handle">Follow us @insara_foundation</span>
+
+        <span class="social-handle">
+          Follow us @insara_foundation
+        </span>
+
       </div>
+
+
       <div class="footer-col">
+
         <h4>Explore</h4>
+
         <a href="about.html">About</a>
         <a href="projects.html">Future Projects</a>
         <a href="gallery.html">Gallery</a>
         <a href="about.html#mianwali">Mianwali</a>
+
       </div>
+
+
       <div class="footer-col">
+
         <h4>Get Involved</h4>
+
         <a href="volunteer.html">Volunteer</a>
         <a href="donate.html">Donate</a>
         <a href="contact.html">Contact Us</a>
+
       </div>
+
+
       <div class="footer-col">
+
         <h4>Contact</h4>
-        <a href="mailto:insarafoundation@gmail.com" class="footer-email"><i class="fa-solid fa-envelope"></i> insarafoundation@gmail.com</a>
-        <span class="footer-location">Mianwali, Punjab, Pakistan</span>
+
+        <a
+          href="mailto:insarafoundation@gmail.com"
+          class="footer-email"
+        >
+
+          <i class="fa-solid fa-envelope"></i>
+
+          insarafoundation@gmail.com
+
+        </a>
+
+        <span class="footer-location">
+          Mianwali, Punjab, Pakistan
+        </span>
+
       </div>
+
     </div>
+
+
     <div class="footer-bottom">
-      <p>Copyright &copy; 2026 INSARA Foundation. All Rights Reserved.</p>
-      <p><a href="mailto:insarafoundation@gmail.com">insarafoundation@gmail.com</a></p>
+
+      <p>
+        Copyright &copy; 2026 INSARA Foundation.
+        All Rights Reserved.
+      </p>
+
+      <p>
+        <a href="mailto:insarafoundation@gmail.com">
+          insarafoundation@gmail.com
+        </a>
+      </p>
+
     </div>
+
   </div>
+
 </footer>
 
-<button class="back-to-top" id="back-to-top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<!-- BACK TO TOP -->
+
+<button
+  class="back-to-top"
+  id="back-to-top"
+  aria-label="Back to top"
+>
+
+  <i class="fa-solid fa-arrow-up"></i>
+
+</button>
+
+
+<!-- =========================================================
+     NUMBER ANIMATION
+     ========================================================= -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const counters =
+    document.querySelectorAll(".donation-stat-number");
+
+  counters.forEach(counter => {
+
+    const target =
+      Number(counter.getAttribute("data-target")) || 0;
+
+    const prefix =
+      counter.getAttribute("data-prefix") || "";
+
+    let current = 0;
+
+    const duration = 1800;
+
+    const startTime = performance.now();
+
+    function updateCounter(currentTime) {
+
+      const elapsed =
+        currentTime - startTime;
+
+      const progress =
+        Math.min(elapsed / duration, 1);
+
+      /*
+        Ease-out animation.
+        The number starts quickly and slows
+        down as it reaches the final value.
+      */
+
+      const easeOut =
+        1 - Math.pow(1 - progress, 3);
+
+      current =
+        Math.floor(easeOut * target);
+
+      counter.textContent =
+        prefix + current.toLocaleString();
+
+      if (progress < 1) {
+
+        requestAnimationFrame(updateCounter);
+
+      } else {
+
+        counter.textContent =
+          prefix + target.toLocaleString();
+
+      }
+
+    }
+
+    requestAnimationFrame(updateCounter);
+
+  });
+
+});
+
+</script>
+
+
 <script src="js/script.js"></script>
+
 </body>
 </html>
