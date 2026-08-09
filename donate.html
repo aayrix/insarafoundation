@@ -75,11 +75,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   font-size: 0.9rem;
 }
 
-/* Donation account */
+/* Donation accounts wrapper */
 
-.donation-account {
+.donation-accounts {
   max-width: 760px;
-  margin: 0 auto 50px;
+  margin: 0 auto 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 .donation-account-card {
@@ -91,6 +94,28 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   background:
     linear-gradient(135deg, #087f45, #00a859);
   box-shadow: 0 18px 45px rgba(0, 120, 70, 0.22);
+}
+
+/* EasyPaisa variant */
+
+.donation-account-card.easypaisa {
+  background: linear-gradient(135deg, #0a5f38, #1cbf6d);
+  box-shadow: 0 18px 45px rgba(0, 100, 60, 0.22);
+}
+
+.donation-account-card.easypaisa .provider-logo-icon {
+  color: #0a8a4b;
+}
+
+/* NayaPay variant */
+
+.donation-account-card.nayapay {
+  background: linear-gradient(135deg, #16213e, #3f37c9);
+  box-shadow: 0 18px 45px rgba(30, 30, 90, 0.22);
+}
+
+.donation-account-card.nayapay .provider-logo-icon {
+  color: #3f37c9;
 }
 
 .donation-account-card::after {
@@ -183,6 +208,22 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
   line-height: 1.7;
   opacity: 0.9;
   max-width: 600px;
+}
+
+/* Fallback note between the two cards */
+
+.donation-fallback-note {
+  max-width: 760px;
+  margin: 0 auto 50px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  padding: 0 10px;
+}
+
+.donation-fallback-note i {
+  color: var(--color-secondary);
+  margin-right: 6px;
 }
 
 /* How to donate */
@@ -512,12 +553,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
 
     <!-- =====================================================
-         JAZZCASH DONATION ACCOUNT
+         DONATION ACCOUNTS (JAZZCASH + EASYPAISA)
          ===================================================== -->
 
-    <div class="donation-account reveal">
+    <div class="donation-accounts">
 
-      <div class="donation-account-card">
+      <!-- JAZZCASH -->
+      <div class="donation-account-card reveal">
 
         <div class="donation-provider">
 
@@ -542,7 +584,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           </div>
 
           <div class="account-badge">
-            Official Donation Account
+            Primary Donation Account
           </div>
 
         </div>
@@ -581,7 +623,148 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
       </div>
 
+
+      <!-- EASYPAISA (BACKUP / ALTERNATIVE) -->
+      <!-- CHANGE THE EASYPAISA NUMBER BELOW TO YOUR REAL ACCOUNT -->
+      <div class="donation-account-card easypaisa reveal">
+
+        <div class="donation-provider">
+
+          <div class="provider-logo">
+
+            <div class="provider-logo-icon">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+
+            <div>
+
+              <div class="provider-name">
+                EasyPaisa
+              </div>
+
+              <div class="provider-type">
+                Mobile Account
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="account-badge">
+            Alternative Donation Account
+          </div>
+
+        </div>
+
+
+        <div class="account-details">
+
+          <span class="account-label">
+            Account Holder
+          </span>
+
+          <div class="account-name">
+            Aliyan Abdullah Khan
+          </div>
+
+
+          <span class="account-label">
+            EasyPaisa Number
+          </span>
+
+          <div class="account-number">
+            0308 9590739
+          </div>
+
+
+          <p class="account-note">
+
+            If JazzCash isn't working for you, you can send your
+            donation to this EasyPaisa account instead. It is used
+            by Aliyan Abdullah Khan to receive donations on behalf
+            of INSARA Foundation. Please verify the account holder
+            name before completing your donation.
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- NAYAPAY (BACKUP / ALTERNATIVE) -->
+      <div class="donation-account-card nayapay reveal">
+
+        <div class="donation-provider">
+
+          <div class="provider-logo">
+
+            <div class="provider-logo-icon">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+
+            <div>
+
+              <div class="provider-name">
+                NayaPay
+              </div>
+
+              <div class="provider-type">
+                Digital Account
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="account-badge">
+            Alternative Donation Account
+          </div>
+
+        </div>
+
+
+        <div class="account-details">
+
+          <span class="account-label">
+            Account Holder
+          </span>
+
+          <div class="account-name">
+            Aliyan Abdullah Khan
+          </div>
+
+
+          <span class="account-label">
+            NayaPay Number
+          </span>
+
+          <div class="account-number">
+            0329 0177151
+          </div>
+
+
+          <p class="account-note">
+
+            You can also send your donation via NayaPay to this
+            number. It is used by Aliyan Abdullah Khan to receive
+            donations on behalf of INSARA Foundation. Please
+            verify the account holder name before completing
+            your donation.
+
+          </p>
+
+        </div>
+
+      </div>
+
     </div>
+
+    <p class="donation-fallback-note reveal">
+      <i class="fa-solid fa-circle-info"></i>
+      Having trouble sending through JazzCash? No problem — just use
+      EasyPaisa or NayaPay instead.
+    </p>
 
 
     <!-- =====================================================
@@ -615,12 +798,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           </div>
 
           <h3>
-            Open JazzCash
+            Open JazzCash, EasyPaisa or NayaPay
           </h3>
 
           <p>
-            Open your JazzCash mobile application or visit
-            a nearby JazzCash retailer.
+            Open your JazzCash, EasyPaisa or NayaPay mobile
+            application, or visit a nearby retailer for any of
+            these services.
           </p>
 
         </div>
@@ -638,8 +822,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 
           <p>
             Send your chosen amount to
-            <strong>0308 9590739</strong>
-            under the name
+            <strong>0308 9590739</strong> via JazzCash or
+            EasyPaisa, or via NayaPay to
+            <strong>0329 0177151</strong> — all under the name
             <strong>Aliyan Abdullah Khan</strong>.
           </p>
 
