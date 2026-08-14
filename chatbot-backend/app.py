@@ -7,10 +7,12 @@ import os
 
 load_dotenv()
 
-# Gemini is optional: the API can still start and return a useful FAQ response
-# while the deployment is being configured.
+# Gemini is the only response source. Keep the API key on the server and never
+# expose it in the browser.
 api_key = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key) if api_key else None
+if not api_key:
+    raise RuntimeError("GEMINI_API_KEY is required to start the chatbot API")
+client = genai.Client(api_key=api_key)
 
 app = FastAPI()
 
@@ -46,20 +48,6 @@ Rules:
 """
 
 
-def local_reply(message: str) -> str:
-    """Small dependency-free fallback for deployments without Gemini."""
-    text = message.lower()
-    if any(word in text for word in ("donat", "contribut", "bank")):
-        return "You can make a contribution from the Donate page using the Donate link in the main navigation. For help, email insarafoundation@gmail.com."
-    if any(word in text for word in ("volunteer", "join", "help out")):
-        return "We welcome volunteers supporting education, food assistance, and community wellbeing. Please visit the Volunteer page or email insarafoundation@gmail.com."
-    if any(word in text for word in ("program", "project", "event", "education", "food")):
-        return "INSARA Foundation serves underprivileged communities in Mianwali, Punjab, focusing on education support, food assistance, and sustainable community development."
-    if any(word in text for word in ("contact", "email", "location", "where")):
-        return "You can reach INSARA Foundation at insarafoundation@gmail.com. We are based in Mianwali, Punjab, Pakistan."
-    return "I can help with donations, volunteering, programs, events, and general INSARA Foundation information. What would you like to know?"
-
-
 @app.get("/")
 async def root():
     return {"message": "Insara Foundation Chatbot API is running."}
@@ -67,9 +55,6 @@ async def root():
 
 @app.post("/chat")
 async def chat(data: ChatRequest):
-    if client is None:
-        return {"reply": local_reply(data.message)}
-
     prompt = f"""
 {SYSTEM_PROMPT}
 

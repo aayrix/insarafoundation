@@ -5,11 +5,11 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ---------------- API configuration ----------------
-     Set window.INSARA_CHAT_ENDPOINT when a hosted API is available.
-     The built-in FAQ fallback keeps the assistant usable on static hosting.
+     Set window.INSARA_CHAT_ENDPOINT to the deployed Python API URL.
+     A relative /api/chat URL supports a same-domain reverse proxy.
   ---------------------------------------------------- */
   const API_CONFIG = {
-    CHAT_ENDPOINT: window.INSARA_CHAT_ENDPOINT || "",
+    CHAT_ENDPOINT: window.INSARA_CHAT_ENDPOINT || "/api/chat",
   };
 
   /* ---------------- UI element bindings ---------------- */
@@ -62,30 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollToBottom();
   };
 
-  const getLocalReply = (message) => {
-    const text = message.toLowerCase();
-
-    if (/donat|contribut|give money|bank/.test(text)) {
-      return "You can make a contribution from the Donate page using the Donate link in the main navigation. For help with a donation, email insarafoundation@gmail.com.";
-    }
-    if (/volunteer|join|help out|work with/.test(text)) {
-      return "We welcome volunteers who want to support education, food assistance, and community wellbeing. Please visit the Volunteer page or email insarafoundation@gmail.com to get started.";
-    }
-    if (/program|project|event|education|food|assist/.test(text)) {
-      return "INSARA Foundation serves underprivileged communities in Mianwali, Punjab, with a focus on education support, food assistance, and sustainable community development.";
-    }
-    if (/contact|email|reach|location|where/.test(text)) {
-      return "You can reach INSARA Foundation at insarafoundation@gmail.com. We are based in Mianwali, Punjab, Pakistan.";
-    }
-    return "I can help with donations, volunteering, programs, events, and general INSARA Foundation information. What would you like to know?";
-  };
-
   /* ---------------- backend call ---------------- */
   const fetchAssistantReply = async (message) => {
-    if (!API_CONFIG.CHAT_ENDPOINT) {
-      return getLocalReply(message);
-    }
-
     const response = await fetch(API_CONFIG.CHAT_ENDPOINT, {
       method: "POST",
       headers: {
@@ -116,14 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setWaitingState(true);
 
     try {
-      let reply;
-      try {
-        reply = await fetchAssistantReply(message);
-      } catch (apiError) {
-        // An unavailable remote API should not leave the chat unusable.
-        console.warn("Chat API unavailable; using built-in assistant:", apiError);
-        reply = getLocalReply(message);
-      }
+      const reply = await fetchAssistantReply(message);
       addMessage("bot", reply);
     } catch (error) {
       console.error("Chatbot request failed:", error);
