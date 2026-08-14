@@ -218,6 +218,12 @@ body.dark .main-nav a:hover{ color:var(--color-accent-light); }
 .main-nav a.active{ color:var(--color-primary); font-weight:600; }
 body.dark .main-nav a.active{ color:var(--color-accent-light); }
 
+/* Keep the navigation legible while the transparent header sits over a hero image. */
+.site-header:not(.scrolled) .main-nav a{ color:rgba(255,255,255,.9); }
+.site-header:not(.scrolled) .main-nav a:hover,
+.site-header:not(.scrolled) .main-nav a.active{ color:var(--color-accent-light); }
+.site-header:not(.scrolled) .main-nav a::after{ background:var(--color-accent-light); }
+
 .header-actions{ display:flex; align-items:center; gap:var(--space-2); }
 .icon-btn{
   height:40px; width:40px; border-radius:50%; display:grid; place-items:center;
@@ -226,6 +232,13 @@ body.dark .main-nav a.active{ color:var(--color-accent-light); }
 }
 .icon-btn:hover{ border-color:var(--color-secondary); color:var(--color-secondary); background:rgba(45,139,94,.06); }
 body.dark .icon-btn{ border-color:var(--color-border-dark); color:#D1D5DB; }
+.site-header:not(.scrolled) .icon-btn{
+  border-color:rgba(255,255,255,.55); color:#fff; background:rgba(10,22,18,.2);
+}
+.site-header:not(.scrolled) .icon-btn:hover{
+  border-color:var(--color-accent-light); color:var(--color-accent-light);
+  background:rgba(255,255,255,.12);
+}
 
 .menu-toggle{ display:none; }
 
