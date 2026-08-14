@@ -1,18 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from google import genai
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-# Gemini is the only response source. Keep the API key on the server and never
-# expose it in the browser.
-api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    raise RuntimeError("GEMINI_API_KEY is required to start the chatbot API")
-client = genai.Client(api_key=api_key)
 
 app = FastAPI(title="INSARA Foundation Chatbot API", version="1.0.0")
 
@@ -34,25 +22,6 @@ class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=2000)
 
 
-SYSTEM_PROMPT = """
-You are the official Insara Foundation Assistant.
-
-About Insara Foundation:
-- Nonprofit organization based in Mianwali, Punjab, Pakistan.
-- Supports underprivileged communities with compassionate and transparent service.
-- Core focus includes education support and food assistance.
-- People can volunteer and donate to support the mission.
-
-Rules:
-- Be polite and professional.
-- Keep answers clear, short, and practical.
-- Prioritize topics about Insara Foundation, donations, volunteering, programs/events, and contact information.
-- If details are missing, suggest contacting insarafoundation@gmail.com.
-- Never invent donation links, phone numbers, or event details.
-- When someone asks how to donate, clearly guide them to use the Donate page on the official INSARA Foundation website (the “Donate” link in the main navigation, usually at donate.html) instead of taking payments directly inside this chat.
-"""
-
-
 @app.get("/")
 async def root():
     return {"service": "INSARA Foundation Chatbot API", "status": "ok"}
@@ -65,25 +34,17 @@ async def health():
 
 @app.post("/chat")
 async def chat(data: ChatRequest):
-    prompt = f"""
-{SYSTEM_PROMPT}
-
-User: {data.message}
-Assistant:
-"""
-
-    try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
-        )
-        reply_text = (response.text or "").strip()
-        if not reply_text:
-            raise ValueError("Gemini returned an empty response")
-        return {"reply": reply_text}
-    except Exception as exc:
-        print("Chat endpoint error:", exc)
-        raise HTTPException(
-            status_code=503,
-            detail="The assistant is temporarily unavailable. Please try again later."
-        ) from exc
+    text = data.message.lower()
+    if any(word in text for word in ("hello", "hi", "hey", "salam", "start")):
+        reply = "Hello! Welcome to INSARA Foundation. How can I help you today?"
+    elif any(word in text for word in ("donat", "contribut", "money", "bank")):
+        reply = "You can donate through the Donate page in the main navigation, or email insarafoundation@gmail.com for help."
+    elif any(word in text for word in ("volunteer", "join", "participat")):
+        reply = "Please visit the Volunteer page to get involved with education, food assistance, and community support."
+    elif any(word in text for word in ("contact", "email", "where", "location", "address")):
+        reply = "INSARA Foundation is based in Mianwali, Punjab, Pakistan. Contact us at insarafoundation@gmail.com."
+    elif any(word in text for word in ("program", "project", "event", "education", "food", "mission")):
+        reply = "INSARA focuses on education support, food assistance, and sustainable community wellbeing in Mianwali."
+    else:
+        reply = "I can help with donations, volunteering, programs, location, and contact details. What would you like to know?"
+    return {"reply": reply}
