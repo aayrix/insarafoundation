@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from google import genai
 from dotenv import load_dotenv
 import os
@@ -14,11 +14,16 @@ if not api_key:
     raise RuntimeError("GEMINI_API_KEY is required to start the chatbot API")
 client = genai.Client(api_key=api_key)
 
-app = FastAPI()
+app = FastAPI(title="INSARA Foundation Chatbot API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Later change to https://insarafoundation.org
+    allow_origins=[
+        "https://insarafoundation.org",
+        "https://www.insarafoundation.org",
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -26,7 +31,7 @@ app.add_middleware(
 
 # Request payload for the /chat endpoint.
 class ChatRequest(BaseModel):
-    message: str
+    message: str = Field(..., min_length=1, max_length=2000)
 
 
 SYSTEM_PROMPT = """
@@ -50,7 +55,12 @@ Rules:
 
 @app.get("/")
 async def root():
-    return {"message": "Insara Foundation Chatbot API is running."}
+    return {"service": "INSARA Foundation Chatbot API", "status": "ok"}
+
+
+@app.get("/health")
+async def health():
+    return {"status": "ok", "model": "gemini-2.5-flash"}
 
 
 @app.post("/chat")
@@ -65,11 +75,11 @@ Assistant:
     try:
         response = client.models.generate_content(
             model="gemini-2.5-flash",
-            contents=prompt
+            contents=prompt,
         )
         reply_text = (response.text or "").strip()
         if not reply_text:
-            reply_text = "I am here to help with donations, volunteering, programs, and general Insara Foundation information."
+            raise ValueError("Gemini returned an empty response")
         return {"reply": reply_text}
     except Exception as exc:
         print("Chat endpoint error:", exc)
