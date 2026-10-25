@@ -4,6 +4,51 @@
    scroll reveal, back-to-top, and contact form handling.
    ========================================================================== */
 
+/* ---------------- welcome intro (shared across all pages) ---------------- */
+(() => {
+  const root = document.documentElement;
+  if (!root.classList.contains('ins-on')) return;
+  const intro = document.createElement('div');
+  intro.className = 'ins-intro';
+  intro.id = 'ins-intro';
+  intro.setAttribute('role', 'dialog');
+  intro.setAttribute('aria-label', 'INSARA Foundation');
+  intro.innerHTML = `<div class="ins-door ins-door--left" aria-hidden="true"></div>
+    <div class="ins-door ins-door--right" aria-hidden="true"></div>
+    <div class="ins-stage" aria-hidden="true">
+      <img class="ins-mark" src="images/logo-sm.png" alt="">
+      <div class="ins-word">INSARA</div><div class="ins-sub">Foundation</div>
+      <p class="ins-tagline">Inspired by Humanity.<br>Driven by Compassion.</p>
+      <div class="ins-meta">Mianwali, Punjab · Est. 2026</div>
+    </div><div class="ins-progress" aria-hidden="true"></div>
+    <button class="ins-skip" type="button">Skip intro</button>`;
+  document.body.prepend(intro);
+  const blocked = [...document.body.children].filter(el => el !== intro && !el.inert);
+  blocked.forEach(el => { el.inert = true; });
+  let finished = false;
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    intro.remove();
+    root.classList.remove('ins-on', 'ins-reveal');
+    blocked.forEach(el => { el.inert = false; });
+    try { sessionStorage.setItem('insara-intro', '1'); } catch (_) {}
+  };
+  const leave = () => {
+    if (intro.classList.contains('leave')) return;
+    root.classList.add('ins-reveal');
+    intro.classList.add('leave');
+    intro.querySelector('.ins-door--right').addEventListener('transitionend', finish, { once: true });
+    setTimeout(finish, 1300);
+  };
+  const timer = setTimeout(leave, 2900);
+  intro.addEventListener('click', leave);
+  intro.querySelector('.ins-skip').addEventListener('click', e => { e.stopPropagation(); clearTimeout(timer); leave(); });
+  window.addEventListener('keydown', e => {
+    if (['Escape', 'Enter', ' '].includes(e.key)) { e.preventDefault(); clearTimeout(timer); leave(); }
+  });
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------------- mobile menu ---------------- */
